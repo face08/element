@@ -1,4 +1,6 @@
+<!-- 通知页面 -->
 <template>
+  <!-- 动画 -->
   <transition name="el-notification-fade">
     <div
       :class="['el-notification', customClass, horizontalClass]"
@@ -9,11 +11,14 @@
       @click="click"
       role="alert"
     >
+    <!-- ico -->
       <i
         class="el-notification__icon"
         :class="[ typeClass, iconClass ]"
         v-if="type || iconClass">
       </i>
+
+      <!-- 文本 -->
       <div class="el-notification__group" :class="{ 'is-with-icon': typeClass || iconClass }">
         <h2 class="el-notification__title" v-text="title"></h2>
         <div class="el-notification__content" v-show="message">

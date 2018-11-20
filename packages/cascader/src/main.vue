@@ -17,6 +17,7 @@
     v-clickoutside="handleClickoutside"
     @keydown="handleKeydown"
   >
+    <!--输入框-->
     <el-input
       ref="input"
       :readonly="readonly"
@@ -32,6 +33,7 @@
       :disabled="cascaderDisabled"
       :class="{ 'is-focus': menuVisible }"
     >
+      <!--箭头-->
       <template slot="suffix">
         <i
           key="1"
@@ -47,6 +49,8 @@
         ></i>
       </template>
     </el-input>
+
+    <!--显示label-->
     <span class="el-cascader__label" v-show="inputValue === '' && !isOnComposition">
       <template v-if="showAllLevels">
         <template v-for="(label, index) in currentLabels">

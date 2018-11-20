@@ -1,3 +1,4 @@
+<!--组菜单-->
 <template>
   <ul class="el-select-group__wrap" v-show="visible">
     <li class="el-select-group__title">{{ label }}</li>

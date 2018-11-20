@@ -4,6 +4,7 @@
     :class="[selectSize ? 'el-select--' + selectSize : '']"
     @click.stop="toggleMenu"
     v-clickoutside="handleClose">
+    <!--多选后，展示的内容-->
     <div
       class="el-select__tags"
       v-if="multiple"
@@ -42,6 +43,7 @@
         </el-tag>
       </transition-group>
 
+      <!--搜索时的输入框-->
       <input
         type="text"
         class="el-select__input"
@@ -67,6 +69,8 @@
         :style="{ width: inputLength + 'px', 'max-width': inputWidth - 42 + 'px' }"
         ref="input">
     </div>
+
+    <!--输入框、默认没有输入功能-->
     <el-input
       ref="reference"
       v-model="selectedLabel"
@@ -91,18 +95,24 @@
       @paste.native="debouncedOnInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false">
+
+
       <template slot="prefix" v-if="$slots.prefix">
         <slot name="prefix"></slot>
       </template>
+      <!--添加后置元素-->
       <i slot="suffix"
        :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"
        @click="handleIconClick"
       ></i>
     </el-input>
+
+    <!--下拉菜单-动画效果-->
     <transition
       name="el-zoom-in-top"
       @before-enter="handleMenuEnter"
       @after-leave="doDestroy">
+      <!--就是select-dropdown-->
       <el-select-menu
         ref="popper"
         :append-to-body="popperAppendToBody"
@@ -192,6 +202,7 @@
         return !this.filterable || this.multiple || !isIE && !this.visible;
       },
 
+      // 后置元素样式
       iconClass() {
         let criteria = this.clearable &&
           !this.selectDisabled &&
@@ -303,7 +314,7 @@
         type: String,
         default: 'value'
       },
-      collapseTags: Boolean,
+      collapseTags: Boolean, // 多选时是否将选中值按文字的形式展示
       popperAppendToBody: {
         type: Boolean,
         default: true
@@ -330,7 +341,7 @@
         previousQuery: null,
         inputHovering: false,
         currentPlaceholder: '',
-        menuVisibleOnFocus: false,
+        menuVisibleOnFocus: false, // 菜单是否显示
         isOnComposition: false,
         isSilentBlur: false
       };
@@ -507,6 +518,7 @@
         this.$refs.scrollbar && this.$refs.scrollbar.handleScroll();
       },
 
+      // 菜单出场动画
       handleMenuEnter() {
         this.$nextTick(() => this.scrollToOption(this.selected));
       },
@@ -571,6 +583,7 @@
         });
       },
 
+      // 输入框焦点事件
       handleFocus(event) {
         if (!this.softFocus) {
           if (this.automaticDropdown || this.filterable) {
@@ -599,6 +612,7 @@
         this.softFocus = false;
       },
 
+      // 后置元素单击
       handleIconClick(event) {
         if (this.iconClass.indexOf('circle-close') > -1) {
           this.deleteSelected(event);
@@ -737,7 +751,7 @@
           return index;
         }
       },
-
+      // 显示、隐藏菜单
       toggleMenu() {
         if (!this.selectDisabled) {
           if (this.menuVisibleOnFocus) {
@@ -761,6 +775,7 @@
         }
       },
 
+      // 删除选择的内容
       deleteSelected(event) {
         event.stopPropagation();
         this.$emit('input', '');
